@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JS Web Audio 3</title>
+  </head>
+
+  <body>
+    <div>
+      <h1>Web Audio API Example 3</h>
+      <button onclick="play();">Start/Stop</button>
+    </div>
+
+    <div>
+      <span>Volume</span>
+      <input type="range" value="50" min="0" max="100" oninput="volume = event.target.value / 100;"></input>
+    </div>
+
+    <div>
+      <span>Pitch</span>
+      <input type="range" value="1500" min="0" max="3000" oninput="pitch = event.target.value;"></input>
+    </div>
+
+  </body>
+
+
+  <script type="text/javascript">
+
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var oscillator;
+    var gainNode = audioCtx.createGain();
+    var isPlaying = false;
+    var volume = 0.5;
+    var pitch = 1500;
+
+    function play() {
+      isPlaying = !isPlaying
+
+      if (isPlaying) {
+        oscillator = audioCtx.createOscillator();
+
+        oscillator.connect(gainNode);
+
+        gainNode.connect(audioCtx.destination);
+
+        oscillator.type = 'sine'; // opts: 'sine', 'square', 'sawtooth', 'triangle', 'custom'
+
+        oscillator.frequency.value = pitch;
+
+        gainNode.gain.value = volume;
+
+        oscillator.start();
+
+      } else {
+        oscillator.stop();
+        oscillator.disconnect();
+      }
+    }
+
+  </script>
+</html>
