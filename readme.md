@@ -11,17 +11,23 @@ By the end of this talk, you'll be able to create basic synth tones in the brows
 We're going to start out with perhaps the simplest setup for our Web Audio app, demonstrating the bare necessities for making the browser produce tones.
 
 ```js   
-    var audioCtx = new (window.AudioContext ||
-    window.webkitAudioContext)();
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    var oscillator;
-
-    oscillator = audioCtx.createOscillator();
+    var oscillator = audioCtx.createOscillator();
 
     oscillator.connect(audioCtx.destination);
 
     oscillator.start();
 ```
+
+In the above sample, we've created all of the objects needed to generate a sound and deliver it to the browser.
+
+First, we instantiate an `AudioContext` object (prefixing needed for Safari), which we will use to create the other necessary nodes and connect them to the destination.
+
+Next, we create an oscillator node using the `AudioContext`
+ object, which generates the tone. The oscillator has a few properties that can be customized, but for now, we'll stick with the default configuration.
+
+ Finally, we connect the oscillator to the `AudioContext` destination and call the `start` function, which starts the node.
 
 ### Example 2
 
